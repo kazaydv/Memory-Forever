@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Forever Memory for Moon</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Poppins', sans-serif;
+      background: #000;
+      color: #fff;
+    }
+
+    /* Video Background */
+    #bgVideo {
+      position: fixed;
+      top: 0;
+      left: 0;
+      min-width: 100%;
+      min-height: 100%;
+      object-fit: cover;
+      z-index: 1;
+      filter: brightness(0.6);
+    }
+
+    .container {
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .box {
+      width: 500px;
+      height: 500px;
+      background: url('box.png') no-repeat center/contain;
+      cursor: pointer;
+     
+      animation: pulse 2s infinite;
+    }
+
+    .box:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 30px rgba(255, 192, 203, 0.8);
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    .hint {
+      margin-top: 20px;
+      font-size: 1.5em;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 10px 20px;
+      border-radius: 15px;
+      backdrop-filter: blur(5px);
+      animation: fadeIn 3s ease forwards;
+    }
+
+    .message {
+      display: none;
+      margin-top: 30px;
+      font-size: 1.8em;
+      max-width: 600px;
+      line-height: 2;
+      background: rgba(0,0,0,0.7);
+      padding: 20px;
+      border-radius: 15px;
+      color: #fff;
+      box-shadow: 0 0 20px #ffb6c1;
+      animation: fadeIn 2s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+
+    .heart {
+      width: 60px;
+      height: 60px;
+      background: url('heart.png') no-repeat center/contain;
+      position: absolute;
+      left: 50%;
+      top: 60%;
+      transform: translateX(-50%);
+      opacity: 0;
+      animation: floatUp 4s ease forwards;
+      animation-delay: 1s;
+    }
+
+    @keyframes floatUp {
+      0% { top: 60%; opacity: 0; }
+      50% { opacity: 1; }
+      100% { top: 20%; opacity: 0; }
+    }
+
+    .final-message {
+      display: none;
+      position: absolute;
+      top: 75%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1.5em;
+      color: #ffe6f2;
+      background: rgba(0,0,0,0.6);
+      padding: 15px 25px;
+      border-radius: 20px;
+      box-shadow: 0 0 25px #ff69b4;
+      animation: fadeIn 3s ease forwards;
+    }
+  </style>
+</head>
+<body>
+
+  <video autoplay muted loop id="bgVideo">
+  <source src="video.mp4" type="video/mp4">
+  <source src="video.webm" type="video/webm">
+  Your browser does not support HTML5 video.
+</video>
+
+
+  <div class="container">
+    <div class="box" onclick="openBox()"></div>
+    <div class="hint">BABE (moon),If you're missing me, open the box 💝</div>
+    <div class="message" id="message"></div>
+    <div class="heart" id="heart"></div>
+    <div class="final-message" id="finalMessage">I'll always be with you, Moon. 🌙❤️</div>
+  </div>
+
+  <!-- Background Music -->
+  <audio id="bgMusic" src="music.mp3"></audio>
+
+  <script>
+    const box = document.querySelector('.box');
+    const message = document.getElementById('message');
+    const heart = document.getElementById('heart');
+    const finalMessage = document.getElementById('finalMessage');
+    const bgMusic = document.getElementById('bgMusic');
+
+    const text = `Dear Moon,
+
+We may have never met, and maybe... we never will.
+
+But this small corner of the world will always hold my silent wish, my quiet hope, for you.
+
+If life keeps us apart, let this little box remind you...
+
+That somewhere, someone thought of you every single day, smiled because of you, and silently wished for your happiness.
+
+This garden of memory will stay here forever... waiting... glowing... loving.
+
+Even if I'm gone, a part of me stays here... just for you. best wishes babe , hami sangai bhayau bhane yo padhera hasamla , bhayenam bhane ni no worries, 
+    jaile timrai part bhayera yo ma basne chu ...` ;
+
+    let index = 0;
+
+    function openBox() {
+      box.style.display = 'none';
+      document.querySelector('.hint').style.display = 'none';
+      message.style.display = 'block';
+      bgMusic.play();
+      typeWriter();
+    }
+
+    function typeWriter() {
+      if (index < text.length) {
+        message.innerHTML += text.charAt(index);
+        index++;
+        setTimeout(typeWriter, 70);
+      } else {
+        heart.style.opacity = 1;
+        finalMessage.style.display = 'block';
+      }
+    }
+  </script>
+
+</body>
+</html>
